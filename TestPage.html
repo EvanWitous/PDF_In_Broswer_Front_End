@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            div, html, body, canvas {
+                margin: 0;
+                padding: 0;
+                font-size: 100%;
+                vertical-align: baseline;
+                border: 0;
+                color: white;
+            }
+
+            .page_nav {
+                background-color: #aaaaaa;
+            }
+
+            button{
+				background-color: #444488;
+				color: #eeeeee;
+				border: none;
+                padding: 8px;
+                margin: 8px;
+				font-size: 20px;
+			}
+
+			button:hover{
+				background-color: #222266;
+				color: #eeeeee;
+            }
+            
+            #toolbar {
+                background-color: #888888;
+            }
+
+            #pdfcanvas {
+                background-color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="page_nav">
+            <button id="viewerToggler">Open PDF</button>
+            <script src="main.js"></script>
+        </div>
+    </body>
+</html>
