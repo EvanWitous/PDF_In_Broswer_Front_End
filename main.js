@@ -1,27 +1,34 @@
 var viewerOpen = false;
+var arrayOfPages = new Array();
+var pageOffset = 0;
 
-document.getElementById("viewerToggler").addEventListener("click", toggleViewer);
+document.getElementById("viewerToggler").addEventListener("click", ToggleViewer);
+document.getElementById("viewerToggler").style.overflow = "hidden";
 
-function toggleViewer() {
+function ToggleViewer() {
 
     var button = document.getElementById("viewerToggler");
 
     if(viewerOpen == true) {
 
-        destroyViewer();
+        DestroyViewer();
+        arrayOfPages = new Array();
         button.innerHTML = "Open PDF";
         viewerOpen = false;
 
     } else {
 
-        createViewer();
+        CreateViewer();
+        ViewerSizeAdjust();
+        LoadPages();
+        DisplayPages();
         button.innerHTML = "Close PDF";
         viewerOpen = true;
     }
 
 }
 
-function createViewer() {
+function CreateViewer() {
     
     //Creates Container
     var container = document.createElement("div");
@@ -64,7 +71,7 @@ function createViewer() {
     document.getElementById("viewer").appendChild(pdfcanvas);
 }
 
-function destroyViewer() {
+function DestroyViewer() {
     
     //Getting elements
     var viewer = document.getElementById("viewer");
@@ -92,12 +99,44 @@ function destroyViewer() {
 
 }
 
+function ViewerSizeAdjust() {
+    //Get elements
+    var viewer = document.getElementById("viewer");
+    var toolbar = document.getElementById("toolbar");
+    var pdfcanvas = document.getElementById("pdfcanvas");
+    
+    //Set dimensions
+    viewer.width = window.innerWidth;
+    toolbar.width = viewer.width;
+    pdfcanvas.width = viewer.width;
+    pdfcanvas.height = window.innerHeight;
+
+    //Prevent spilling of elements
+    viewer.style.overflow = "hidden";
+    toolbar.style.overflow = "hidden";
+    pdfcanvas.style.overflow = "hidden";
+}
+
 function PageBack() {
-    //TODO
+    //Adjust current page offset
+    if(pageOffset > -1) {
+
+        pageOffset--;
+        DisplayPages();
+    }
+
+    console.log(pageOffset);
 }
 
 function PageNext() {
-    //TODO
+    //Adjust current page offset
+    if(pageOffset < arrayOfPages.length-1) {
+
+        pageOffset++;
+        DisplayPages();
+    }
+
+    console.log(pageOffset);
 }
 
 function ZoomIn() {
@@ -106,4 +145,28 @@ function ZoomIn() {
 
 function ZoomOut() {
     //TODO
+}
+
+function LoadPages() {
+    
+    //Add pages into array
+    for(var x = 1; x <= 5; x++) {
+        arrayOfPages[x-1] = new Image();
+        arrayOfPages[x-1].src = "testpage" + x + ".png";
+    }
+}
+
+function DisplayPages() {
+    //Getting elements
+    var pdfcanvas = document.getElementById("pdfcanvas");
+    var context = pdfcanvas.getContext("2d");
+
+    //Clearing Canvas
+    context.fillStyle = window.getComputedStyle(pdfcanvas, null).getPropertyValue("background-color");
+    context.fillRect(0, 0, pdfcanvas.width, pdfcanvas.height);
+
+    //Drawing pages to canvas
+    for(var x = 1; x <= arrayOfPages.length; x++) {
+        context.drawImage(arrayOfPages[x-1], (arrayOfPages[x-1].width + 20) * (-pageOffset+x-1), 0);
+    }
 }
