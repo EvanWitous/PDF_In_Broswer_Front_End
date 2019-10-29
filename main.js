@@ -4,6 +4,8 @@ var pageOffset = 0;
 
 document.getElementById("viewerToggler").addEventListener("click", ToggleViewer);
 document.getElementById("viewerToggler").style.overflow = "hidden";
+//For testing
+//document.getElementsByClassName("page_nav").width = window.innerWidth * 0.81;
 
 function ToggleViewer() {
 
@@ -28,11 +30,12 @@ function ToggleViewer() {
 }
 
 function CreateViewer() {
-    
+
     //Creates Container
     var container = document.createElement("div");
     container.setAttribute("id", "viewer");
     document.body.appendChild(container);
+    document.getElementById("viewer").style.position = "fixed";
 
     //Create toolbar
     var toolbar = document.createElement("div");
@@ -109,17 +112,20 @@ function DestroyViewer() {
 
 function ViewerSizeAdjust() {
     //Get elements
+    var widget = document.getElementById("viewerToggler");
     var viewer = document.getElementById("viewer");
     var toolbar = document.getElementById("toolbar");
     var pdfcanvas = document.getElementById("pdfcanvas");
     
     //Set dimensions
-    viewer.width = window.innerWidth;
+    widget.width = window.innerWidth;
+    viewer.width = widget.width;
     toolbar.width = viewer.width;
     pdfcanvas.width = viewer.width;
     pdfcanvas.height = window.innerHeight;
 
     //Prevent spilling of elements
+    widget.style.overflow = "hidden";
     viewer.style.overflow = "hidden";
     toolbar.style.overflow = "hidden";
     pdfcanvas.style.overflow = "hidden";
@@ -178,6 +184,6 @@ function DisplayPages() {
     //Drawing pages to canvas
     for(var x = 1; x <= arrayOfPages.length; x++) {
         
-        context.drawImage(arrayOfPages[x-1], (arrayOfPages[x-1].width + 20) * (-pageOffset+x-1), 0);
+        context.drawImage(arrayOfPages[x-1], (arrayOfPages[x-1].width + 20) * (-pageOffset+x-1) + 10, 10);
     }
 }
