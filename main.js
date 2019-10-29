@@ -119,7 +119,7 @@ function ViewerSizeAdjust() {
 
 function PageBack() {
     //Adjust current page offset
-    if(pageOffset > -1) {
+    if(pageOffset > 0) {
 
         pageOffset--;
         DisplayPages();
