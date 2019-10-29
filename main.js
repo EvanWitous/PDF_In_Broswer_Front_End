@@ -19,9 +19,8 @@ function ToggleViewer() {
     } else {
 
         CreateViewer();
-        ViewerSizeAdjust();
         LoadPages();
-        DisplayPages();
+        ViewerSizeAdjust();
         button.innerHTML = "Close PDF";
         viewerOpen = true;
     }
@@ -41,6 +40,12 @@ function CreateViewer() {
     document.getElementById("viewer").appendChild(toolbar);
 
     //Create nav buttons
+    var refresher = document.createElement("button");
+    refresher.setAttribute("id", "refresher");
+    document.getElementById("toolbar").appendChild(refresher);
+    document.getElementById("refresher").innerHTML = "Refresh";
+    document.getElementById("refresher").addEventListener("click", ViewerSizeAdjust);
+
     var backPage = document.createElement("button");
     backPage.setAttribute("id", "backPage");
     document.getElementById("toolbar").appendChild(backPage);
@@ -76,6 +81,7 @@ function DestroyViewer() {
     //Getting elements
     var viewer = document.getElementById("viewer");
     var toolbar = document.getElementById("toolbar");
+    var refresher = document.getElementById("refresher");
     var backPage = document.getElementById("backPage");
     var nextPage = document.getElementById("nextPage");
     var zoomIn = document.getElementById("zoomIn");
@@ -83,6 +89,7 @@ function DestroyViewer() {
     var pdfcanvas = document.getElementById("pdfcanvas");
 
     //Clearing event listeners
+    refresher.removeEventListener("click", ViewerSizeAdjust);
     backPage.removeEventListener("click", PageBack);
     nextPage.removeEventListener("click", PageNext);
     zoomIn.removeEventListener("click", ZoomIn);
@@ -94,6 +101,7 @@ function DestroyViewer() {
     zoomOut.remove();
     nextPage.remove();
     backPage.remove();
+    refresher.remove();
     toolbar.remove();
     viewer.remove();
 
@@ -115,6 +123,9 @@ function ViewerSizeAdjust() {
     viewer.style.overflow = "hidden";
     toolbar.style.overflow = "hidden";
     pdfcanvas.style.overflow = "hidden";
+
+    //Draw to new veiwer
+    DisplayPages();
 }
 
 function PageBack() {
@@ -125,7 +136,6 @@ function PageBack() {
         DisplayPages();
     }
 
-    console.log(pageOffset);
 }
 
 function PageNext() {
@@ -136,7 +146,6 @@ function PageNext() {
         DisplayPages();
     }
 
-    console.log(pageOffset);
 }
 
 function ZoomIn() {
@@ -153,7 +162,7 @@ function LoadPages() {
     for(var x = 1; x <= 5; x++) {
         
         arrayOfPages[x-1] = new Image();
-        arrayOfPages[x-1].src = "testpage" + x + ".png";
+        arrayOfPages[x-1].src = "testresources/testpage" + x + ".png";
     }
 }
 
