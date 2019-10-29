@@ -151,6 +151,7 @@ function LoadPages() {
     
     //Add pages into array
     for(var x = 1; x <= 5; x++) {
+        
         arrayOfPages[x-1] = new Image();
         arrayOfPages[x-1].src = "testpage" + x + ".png";
     }
@@ -167,6 +168,7 @@ function DisplayPages() {
 
     //Drawing pages to canvas
     for(var x = 1; x <= arrayOfPages.length; x++) {
+        
         context.drawImage(arrayOfPages[x-1], (arrayOfPages[x-1].width + 20) * (-pageOffset+x-1), 0);
     }
 }
