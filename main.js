@@ -4,8 +4,21 @@ var pageOffset = 0;
 
 document.getElementById("viewerToggler").addEventListener("click", ToggleViewer);
 document.getElementById("viewerToggler").style.overflow = "hidden";
-//For testing
-//document.getElementsByClassName("page_nav").width = window.innerWidth * 0.81;
+
+document.addEventListener("keydown", (event) => {
+
+    const keyName = event.key;
+
+    if(keyName === "ArrowLeft") {
+
+        PageBack();
+
+    } else if(keyName === "ArrowRight") {
+
+        PageNext();
+    }
+
+}, false);
 
 function ToggleViewer() {
 
@@ -136,7 +149,7 @@ function ViewerSizeAdjust() {
 
 function PageBack() {
     //Adjust current page offset
-    if(pageOffset > 0) {
+    if(pageOffset > 0 && viewerOpen == true) {
 
         pageOffset--;
         DisplayPages();
@@ -146,7 +159,7 @@ function PageBack() {
 
 function PageNext() {
     //Adjust current page offset
-    if(pageOffset < arrayOfPages.length-1) {
+    if(pageOffset < arrayOfPages.length-1 && viewerOpen == true) {
 
         pageOffset++;
         DisplayPages();
