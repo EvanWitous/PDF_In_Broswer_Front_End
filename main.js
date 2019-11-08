@@ -207,25 +207,25 @@ function ZoomOut() {
 
 function ScrollUp() {
 
-    scrollY -= 10;
+    scrollY += 10;
     DisplayPages();
 }
 
 function ScrollDown() {
 
-    scrollY += 10;
+    scrollY -= 10;
     DisplayPages();
 }
 
 function ScrollLeft() {
 
-    scrollX -= 10;
+    scrollX += 10;
     DisplayPages();
 }
 
 function ScrollRight() {
 
-    scrollX += 10;
+    scrollX -= 10;
     DisplayPages();
 }
 
