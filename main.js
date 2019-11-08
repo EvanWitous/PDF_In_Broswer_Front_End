@@ -1,6 +1,7 @@
 var viewerOpen = false;
 var arrayOfPages = new Array();
 var pageOffset = 0;
+var zoomLevel = 100;
 
 document.getElementById("viewerToggler").addEventListener("click", ToggleViewer);
 document.getElementById("viewerToggler").style.overflow = "hidden";
@@ -168,11 +169,23 @@ function PageNext() {
 }
 
 function ZoomIn() {
-    //TODO
+    
+    if(zoomLevel <= 400) {
+
+        zoomLevel *= 2;
+        DisplayPages();
+    }
+    
 }
 
 function ZoomOut() {
-    //TODO
+    
+    if(zoomLevel >= 50) {
+
+        zoomLevel /= 2;
+        DisplayPages();
+    }
+    
 }
 
 function LoadPages() {
@@ -197,6 +210,6 @@ function DisplayPages() {
     //Drawing pages to canvas
     for(var x = 1; x <= arrayOfPages.length; x++) {
         
-        context.drawImage(arrayOfPages[x-1], (arrayOfPages[x-1].width + 20) * (-pageOffset+x-1) + 10, 10);
+        context.drawImage(arrayOfPages[x-1], (arrayOfPages[x-1].width * (zoomLevel/100) + 20) * (-pageOffset+x-1) + 10, 10, arrayOfPages[x-1].width * (zoomLevel/100), arrayOfPages[x-1].height * (zoomLevel/100));
     }
 }
