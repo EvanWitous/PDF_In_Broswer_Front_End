@@ -2,6 +2,8 @@ var viewerOpen = false;
 var arrayOfPages = new Array();
 var pageOffset = 0;
 var zoomLevel = 100;
+var scrollY = 0;
+var scrollX = 0;
 
 document.getElementById("viewerToggler").addEventListener("click", ToggleViewer);
 document.getElementById("viewerToggler").style.overflow = "hidden";
@@ -10,14 +12,32 @@ document.addEventListener("keydown", (event) => {
 
     const keyName = event.key;
 
-    if(keyName === "ArrowLeft") {
+    if(keyName === "[") {
 
         PageBack();
 
-    } else if(keyName === "ArrowRight") {
+    } else if(keyName === "]") {
 
         PageNext();
+
+    } else if(keyName === "ArrowLeft") {
+
+        ScrollLeft();
+
+    } else if(keyName === "ArrowRight") {
+
+        ScrollRight();
+    
+    } else if(keyName === "ArrowUp") {
+
+        ScrollUp();
+
+    } else if(keyName === "ArrowDown") {
+
+        ScrollDown();
+
     }
+
 
 }, false);
 
@@ -40,7 +60,6 @@ function ToggleViewer() {
         button.innerHTML = "Close PDF";
         viewerOpen = true;
     }
-
 }
 
 function CreateViewer() {
@@ -121,7 +140,6 @@ function DestroyViewer() {
     refresher.remove();
     toolbar.remove();
     viewer.remove();
-
 }
 
 function ViewerSizeAdjust() {
@@ -135,14 +153,17 @@ function ViewerSizeAdjust() {
     widget.width = window.innerWidth;
     viewer.width = widget.width;
     toolbar.width = viewer.width;
-    pdfcanvas.width = viewer.width;
-    pdfcanvas.height = window.innerHeight;
+    pdfcanvas.width = viewer.width + arrayOfPages[pageOffset].width;
+    pdfcanvas.height = window.innerHeight + arrayOfPages[pageOffset].height;
 
     //Prevent spilling of elements
     widget.style.overflow = "hidden";
     viewer.style.overflow = "hidden";
     toolbar.style.overflow = "hidden";
     pdfcanvas.style.overflow = "hidden";
+
+    scrollX = 0;
+    scrollY = 0;
 
     //Draw to new veiwer
     DisplayPages();
@@ -155,7 +176,6 @@ function PageBack() {
         pageOffset--;
         DisplayPages();
     }
-
 }
 
 function PageNext() {
@@ -165,7 +185,6 @@ function PageNext() {
         pageOffset++;
         DisplayPages();
     }
-
 }
 
 function ZoomIn() {
@@ -175,7 +194,6 @@ function ZoomIn() {
         zoomLevel *= 2;
         DisplayPages();
     }
-    
 }
 
 function ZoomOut() {
@@ -185,11 +203,33 @@ function ZoomOut() {
         zoomLevel /= 2;
         DisplayPages();
     }
-    
+}
+
+function ScrollUp() {
+
+    scrollY -= 10;
+    DisplayPages();
+}
+
+function ScrollDown() {
+
+    scrollY += 10;
+    DisplayPages();
+}
+
+function ScrollLeft() {
+
+    scrollX -= 10;
+    DisplayPages();
+}
+
+function ScrollRight() {
+
+    scrollX += 10;
+    DisplayPages();
 }
 
 function LoadPages() {
-    
     //Add pages into array
     for(var x = 1; x <= 5; x++) {
         
@@ -210,6 +250,6 @@ function DisplayPages() {
     //Drawing pages to canvas
     for(var x = 1; x <= arrayOfPages.length; x++) {
         
-        context.drawImage(arrayOfPages[x-1], (arrayOfPages[x-1].width * (zoomLevel/100) + 20) * (-pageOffset+x-1) + 10, 10, arrayOfPages[x-1].width * (zoomLevel/100), arrayOfPages[x-1].height * (zoomLevel/100));
+        context.drawImage(arrayOfPages[x-1], (arrayOfPages[x-1].width * (zoomLevel/100) + 20) * (-pageOffset+x-1) + 10 + scrollX, 10 + scrollY, arrayOfPages[x-1].width * (zoomLevel/100), arrayOfPages[x-1].height * (zoomLevel/100));
     }
 }
