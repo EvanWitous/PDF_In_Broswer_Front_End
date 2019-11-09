@@ -192,6 +192,7 @@ function ZoomIn() {
     if(zoomLevel <= 400) {
 
         zoomLevel *= 2;
+        //TODO: adjust scroll values
         DisplayPages();
     }
 }
@@ -201,6 +202,7 @@ function ZoomOut() {
     if(zoomLevel >= 50) {
 
         zoomLevel /= 2;
+        //TODO: adjust scroll values
         DisplayPages();
     }
 }
