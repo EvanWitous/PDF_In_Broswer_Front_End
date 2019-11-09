@@ -192,7 +192,8 @@ function ZoomIn() {
     if(zoomLevel <= 400) {
 
         zoomLevel *= 2;
-        //TODO: adjust scroll values
+        scrollY *= 2;
+        scrollX *= 2;
         DisplayPages();
     }
 }
@@ -202,7 +203,20 @@ function ZoomOut() {
     if(zoomLevel >= 50) {
 
         zoomLevel /= 2;
-        //TODO: adjust scroll values
+
+        scrollY = Math.max(scrollY/2, (-arrayOfPages[pageOffset].height * (zoomLevel/100)) + window.innerHeight - 130);
+        scrollX = Math.max(scrollX/2, (-arrayOfPages[pageOffset].width * (zoomLevel/100)) + window.innerWidth - 20);
+
+        if(scrollY > 0) {
+
+            scrollY = 0;
+        }
+
+        if(scrollX > 0) {
+
+            scrollX = 0;
+        }
+
         DisplayPages();
     }
 }
