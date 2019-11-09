@@ -207,26 +207,44 @@ function ZoomOut() {
 
 function ScrollUp() {
 
-    scrollY += 10;
-    DisplayPages();
+    if(viewerOpen == true) {
+        
+        if(scrollY < 0) {
+
+            scrollY += 10;
+            DisplayPages();
+        }
+    }
 }
 
 function ScrollDown() {
 
-    scrollY -= 10;
-    DisplayPages();
+    if(viewerOpen == true) {
+    
+        if(scrollY > (-arrayOfPages[pageOffset].height * (zoomLevel/100)) + window.innerHeight - 130) {
+
+            scrollY -= 10;
+            DisplayPages();
+        }
+    }
 }
 
 function ScrollLeft() {
+    
+    if(viewerOpen == true) {
 
-    scrollX += 10;
-    DisplayPages();
+        scrollX += 10;
+        DisplayPages();
+    }
 }
 
 function ScrollRight() {
 
-    scrollX -= 10;
-    DisplayPages();
+    if(viewerOpen == true) {
+
+        scrollX -= 10;
+        DisplayPages();
+    }
 }
 
 function LoadPages() {
