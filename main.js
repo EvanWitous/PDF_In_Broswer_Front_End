@@ -233,8 +233,11 @@ function ScrollLeft() {
     
     if(viewerOpen == true) {
 
-        scrollX += 10;
-        DisplayPages();
+        if(scrollX < 0) {
+
+            scrollX += 10;
+            DisplayPages();
+        }
     }
 }
 
@@ -242,8 +245,11 @@ function ScrollRight() {
 
     if(viewerOpen == true) {
 
-        scrollX -= 10;
-        DisplayPages();
+        if(scrollX > (-arrayOfPages[pageOffset].width * (zoomLevel/100)) + window.innerWidth - 20) {
+
+            scrollX -= 10;
+            DisplayPages();
+        }
     }
 }
 
