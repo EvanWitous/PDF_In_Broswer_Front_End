@@ -36,6 +36,13 @@ document.addEventListener("keydown", (event) => {
 
         ScrollDown();
 
+    } else if(keyName === ",") {
+
+        ZoomIn();
+
+    } else if(keyName === ".") {
+
+        ZoomOut();
     }
 
 
