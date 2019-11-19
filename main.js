@@ -56,7 +56,7 @@ function ToggleViewer() {
 
         DestroyViewer();
         arrayOfPages = new Array();
-        button.innerHTML = "Open PDF";
+        button.innerHTML = "Open IMG";
         viewerOpen = false;
 
     } else {
@@ -64,7 +64,7 @@ function ToggleViewer() {
         CreateViewer();
         LoadPages();
         ViewerSizeAdjust();
-        button.innerHTML = "Close PDF";
+        button.innerHTML = "Close IMG";
         viewerOpen = true;
     }
 }
